@@ -2,13 +2,12 @@ import mongoose from 'mongoose';
 import app from './app.js';
 import { getLogger } from './utils/logger.js';
 import { bootEnv } from './config/bootConfig.js';
+import { connectMongo } from './db/mongo.js';
 
 const logger = getLogger().setTag('server.ts');
 const PORT = bootEnv.PORT;
-const MONGO_URI = bootEnv.MONGO_URI;
 
-mongoose
-    .connect(MONGO_URI)
+connectMongo()
     .then(() => {
         app.listen(PORT, () => {
             logger.log(`Server running on http://localhost:${PORT}`);
