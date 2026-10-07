@@ -6,6 +6,7 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon",
+        "dev:local": "tsx scripts/dev-local.ts",
         "build": "tsc",
         "start": "node dist/server.js",
         "format": "prettier --write .",

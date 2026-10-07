@@ -17,10 +17,21 @@ function normalizeError(err: unknown): NormalizedError {
             details: err.details,
         };
     }
-    if (err instanceof Error) {
-        return { message: err.message, httpStatus: 500, appCode: 'UNKNOWN_ERROR' };
+    if (err instanceof Error && 'type' in err) {
+        if (err.type === 'entity.parse.failed')
+            return { message: 'JSON no válido.', httpStatus: 400, appCode: 'INVALID_JSON' };
+        if (err.type === 'entity.too.large')
+            return {
+                message: 'La petición es demasiado grande.',
+                httpStatus: 413,
+                appCode: 'PAYLOAD_TOO_LARGE',
+            };
     }
-    return { message: 'Unknown error', httpStatus: 500, appCode: 'UNKNOWN_ERROR' };
+    return {
+        message: 'No se pudo completar la operación.',
+        httpStatus: 500,
+        appCode: 'UNKNOWN_ERROR',
+    };
 }
 
 export function sendSuccess(

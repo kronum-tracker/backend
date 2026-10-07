@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import app from './app.js';
 import { getLogger } from './utils/logger.js';
 import { bootEnv } from './config/bootConfig.js';

@@ -1,7 +1,6 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { afterEach } from 'node:test';
-import { afterAll, beforeAll } from 'vitest';
+import { afterAll, afterEach, beforeAll } from 'vitest';
 
 let mongo: MongoMemoryServer;
 
@@ -9,7 +8,7 @@ beforeAll(async () => {
     mongo = await MongoMemoryServer.create();
     const uri = mongo.getUri();
     await mongoose.connect(uri);
-});
+}, 120000);
 
 afterAll(async () => {
     await mongoose.disconnect();
